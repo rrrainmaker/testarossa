@@ -1,0 +1,549 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #eeeff0;
+  --color-paper-2: #e1e3e6;
+  --color-ink: #121315;
+  --color-ink-2: #45484e;
+  --color-graphite: #2d2f33;
+  --color-rosso: #d3151c;
+  --color-rosso-deep: #9f0e14;
+  --color-night: #0a0612;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --font-wide: var(--font-michroma), "Eurostile", "Microgramma", ui-sans-serif, sans-serif;
+  --font-cond: var(--font-saira-condensed), "Arial Narrow", ui-sans-serif, sans-serif;
+  --font-body: var(--font-saira), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    scrollbar-color: var(--color-rosso) var(--color-paper-2);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.55;
+    background: var(--color-paper);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-rosso);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 6px var(--color-ink);
+  }
+  a {
+    color: inherit;
+  }
+}
+
+/* ------------------------------------------------------------------ chrome */
+
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 70;
+  height: 2px;
+  background: var(--color-rosso);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+.nav {
+  z-index: 60;
+  color: var(--color-ink);
+}
+.nav--light {
+  z-index: 61;
+  color: #fff;
+  clip-path: path("M0 0");
+}
+/* keyboard focus always shows the real bar in full */
+.nav--dark:focus-within {
+  clip-path: none !important;
+}
+.brand-mark {
+  color: var(--color-rosso);
+}
+.nav--light .brand-mark {
+  color: currentColor;
+}
+.nav-link {
+  position: relative;
+  padding: 10px 0;
+  font-family: var(--font-wide);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0.24em;
+  bottom: 4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.35s var(--ease-out-expo);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+.pill {
+  padding: 11px 18px 10px;
+  white-space: nowrap;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-family: var(--font-wide);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background-color 0.25s,
+    color 0.25s;
+}
+.nav--dark .pill:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.nav--light .pill:hover {
+  background: #fff;
+  color: var(--color-rosso-deep);
+}
+
+/* ------------------------------------------------------------------ stage */
+
+.story {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  background: var(--color-paper);
+}
+.story.is-night {
+  background: var(--color-night);
+}
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-paper);
+}
+.layer {
+  position: absolute;
+  inset: 0;
+}
+.car {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+.car svg {
+  display: block;
+  overflow: visible;
+}
+
+/* the engine reveals these; without JavaScript the intro and spec sheet still stand */
+.l-track,
+.car,
+.l-band,
+.l-nums,
+.l-panel,
+.l-dims,
+.l-word,
+.l-smoke,
+.l-fog,
+.l-dusk,
+.l-gshadow,
+.l-puff,
+.cap,
+.finale {
+  visibility: hidden;
+}
+.l-dusk .car {
+  visibility: inherit;
+}
+
+.l-grid {
+  background-image:
+    linear-gradient(to right, rgb(18 19 21 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(18 19 21 / 0.07) 1px, transparent 1px),
+    linear-gradient(to right, rgb(18 19 21 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(18 19 21 / 0.045) 1px, transparent 1px);
+  background-size:
+    160px 160px,
+    160px 160px,
+    32px 32px,
+    32px 32px;
+  background-position: -1px -1px;
+  mask-image: radial-gradient(125% 95% at 50% 45%, #000 55%, transparent 100%);
+}
+
+.cue::after {
+  content: "";
+  width: 64px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: 0 50%;
+  animation: cue 2.6s var(--ease-out-expo) infinite;
+}
+@keyframes cue {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  55% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+.l-titleblock {
+  position: absolute;
+  right: clamp(16px, 3.4vw, 48px);
+  bottom: clamp(16px, 4vh, 40px);
+  display: grid;
+  grid-template-columns: auto auto;
+  border: 1px solid rgb(45 47 51 / 0.55);
+  font-family: var(--font-cond);
+  font-size: clamp(9px, 0.8vw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-graphite);
+  opacity: 0;
+}
+.l-titleblock span {
+  padding: 7px 12px 6px;
+  border-right: 1px solid rgb(45 47 51 / 0.35);
+  border-bottom: 1px solid rgb(45 47 51 / 0.35);
+}
+.l-titleblock span:nth-child(2n) {
+  border-right: 0;
+}
+.l-titleblock span:nth-child(n + 3) {
+  border-bottom: 0;
+}
+
+/* pencil */
+.l-track {
+  overflow: visible;
+}
+.track-main,
+.track-ghost {
+  fill: none;
+  stroke: var(--color-graphite);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.track-main {
+  stroke-width: 1.7;
+  opacity: 0.88;
+}
+.track-ghost {
+  stroke-width: 1;
+  opacity: 0.45;
+}
+.track-tip {
+  fill: var(--color-graphite);
+}
+.sk {
+  fill: none;
+  stroke: var(--color-graphite);
+  stroke-width: var(--skw, 1.4);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.l-pathcar .sk {
+  opacity: 0.92;
+}
+.sk-ghost .sk {
+  stroke-width: calc(var(--skw, 1.4) * 0.6);
+  opacity: 0.5;
+}
+.rk-cons .sk {
+  stroke: #8d9097;
+  stroke-width: calc(var(--skw, 1.4) * 0.6);
+}
+
+/* rear: painted in from the ground up */
+.rear-render,
+.rear-sketch {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.rear-render {
+  --fill: 0;
+  -webkit-mask-image: linear-gradient(to top, #000 calc(var(--fill) * 130% - 30%), transparent calc(var(--fill) * 130%));
+  mask-image: linear-gradient(to top, #000 calc(var(--fill) * 130% - 30%), transparent calc(var(--fill) * 130%));
+}
+.l-side.is-flying .c-shadow {
+  opacity: 0;
+}
+
+/* band + ticker */
+.l-band {
+  background: var(--color-rosso);
+  transform: translateY(100vh);
+}
+.ticker {
+  position: absolute;
+  top: clamp(12px, 3.2vh, 30px);
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  color: #fff;
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+}
+.ticker-group {
+  display: flex;
+  flex: none;
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42em;
+  padding-right: 0.42em;
+  font-family: var(--font-cond);
+  font-size: clamp(30px, 4.4vw, 74px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ticker-item i {
+  width: 0.15em;
+  height: 0.15em;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.8;
+}
+
+/* numerals */
+.num {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+.num-v {
+  font-family: var(--font-cond);
+  font-size: var(--num-size, 200px);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+.num-u {
+  margin-left: 0.1em;
+  font-size: 0.3em;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.l-gshadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(60 0 4 / 0.75), rgb(60 0 4 / 0));
+}
+.l-puff {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.9), rgb(255 255 255 / 0));
+  filter: blur(4px);
+}
+
+/* the red: wipe → road → line → stem */
+.l-panel {
+  background: var(--color-rosso);
+  clip-path: path("M0 0");
+}
+.lane {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  border-radius: 3px;
+  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.5) 0 50px, transparent 50px 120px);
+  background-size: 6px 120px;
+}
+.l-dims path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.2;
+}
+.l-dims text {
+  font-family: var(--font-cond);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  fill: #fff;
+  paint-order: stroke;
+  stroke: var(--color-rosso);
+  stroke-width: 10px;
+  stroke-linejoin: round;
+}
+.l-word {
+  overflow: visible;
+}
+.wm {
+  fill: none;
+  stroke: var(--color-rosso);
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+/* smoke → dusk */
+.l-smoke,
+.dusk-canvas {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.l-fog {
+  background: radial-gradient(120% 100% at 30% 62%, #f4f4f5, #dcdde0);
+}
+.l-dusk {
+  background: var(--color-night);
+}
+.dusk-canvas {
+  position: absolute;
+  inset: 0;
+}
+.palm {
+  position: absolute;
+  bottom: -2%;
+  height: 54%;
+  width: auto;
+  transform-origin: 50% 100%;
+}
+.palm-l {
+  left: -6%;
+}
+.palm-r {
+  right: -6%;
+}
+@media (orientation: portrait) {
+  .palm {
+    bottom: 44%;
+    height: 18%;
+  }
+  .palm-l {
+    left: -12%;
+  }
+  .palm-r {
+    right: -12%;
+  }
+}
+
+/* captions: a dark set over paper, a white set over red (the engine clips both) */
+.l-caps {
+  pointer-events: none;
+}
+.cap {
+  position: absolute;
+  top: calc(64px + clamp(24px, 6vh, 72px));
+  left: clamp(16px, 3.4vw, 48px);
+  max-width: min(32ch, calc(100vw - 32px));
+  margin: 0;
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.5;
+  color: var(--color-ink-2);
+}
+.cap b {
+  display: block;
+  white-space: nowrap;
+  margin-bottom: 0.7em;
+  font-family: var(--font-wide);
+  font-size: clamp(12px, 1vw, 15px);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+.l-caps--light .cap {
+  color: rgb(255 255 255 / 0.86);
+}
+.l-caps--light .cap b {
+  color: #fff;
+}
+.cap--name {
+  top: var(--cap-y, 60vh);
+  left: var(--cap-x, 48px);
+  max-width: min(40ch, calc(100vw - var(--cap-x, 48px) - 16px));
+}
+
+/* spec sheet drawing */
+.spec-drawing .sk {
+  stroke-width: 1.7;
+}
+.spec-drawing .sk-ghost .sk {
+  stroke-width: 1;
+  opacity: 0.5;
+}
+.spec-drawing .dim-ext {
+  stroke: #8d9097;
+  stroke-width: 1;
+}
+.spec-drawing text {
+  font-family: var(--font-cond);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  fill: var(--color-ink);
+}
+@media (max-width: 640px) {
+  .spec-drawing text {
+    font-size: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cue::after {
+    animation: none;
+    transform: scaleX(1);
+  }
+}

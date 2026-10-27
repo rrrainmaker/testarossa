@@ -1,0 +1,7 @@
+{
+  // Static export deployed to Cloudflare Pages: https://<project>.pages.dev
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "testarossa-drawn",
+  "compatibility_date": "2026-10-19",
+  "pages_build_output_dir": "./out"
+}
